@@ -1,0 +1,35 @@
+# Data — never committed (Stanford agreement forbids redistribution)
+data/
+*.avi
+*.npy
+cache/
+
+# Checkpoints and large outputs
+checkpoints/
+*.pt
+*.pth
+
+# Internal run telemetry and discarded runs (kept local only)
+logs/
+archive/
+
+# Manuscript and submission materials (kept local only)
+paper/
+PLOS Latex/
+figures/mocks/
+figures/plot_mocks.py
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Results CSVs ARE committed (they are the contribution) — do not ignore results/

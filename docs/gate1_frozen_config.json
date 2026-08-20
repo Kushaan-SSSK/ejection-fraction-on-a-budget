@@ -1,0 +1,34 @@
+{
+  "run_id": "3a_r2p1d_f32_p2",
+  "purpose": "Gate 1 baseline run (README/PLAN.md Phase 1). Target: test MAE <= 4.6.",
+  "config_file": "configs/3a_r2p1d_f32_p2.yaml",
+  "git_commit": "b476332b7ed712b38395195c5ee7247e16e4cbc7",
+  "frozen_at_utc": "2026-08-15T04:30:00Z",
+  "resolved_config": {
+    "backbone": "r2plus1d_18",
+    "pretrained": true,
+    "pretrained_source": "torchvision R2Plus1D_18_Weights.KINETICS400_V1",
+    "frames": 32,
+    "period": 2,
+    "resolution": 112,
+    "epochs": 30,
+    "optimizer": "SGD",
+    "lr": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0001,
+    "lr_schedule": "StepLR: multiply lr by 0.1 every 10 epochs (lr_step=10)",
+    "effective_batch": 20,
+    "physical_batch": 10,
+    "grad_accumulation_steps": 2,
+    "seed": 20260814,
+    "num_workers": 4,
+    "amp": true,
+    "cache_dir": null
+  },
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 2070 SUPER",
+    "vram_gb": 8,
+    "torch_version": "2.6.0+cu124"
+  },
+  "note": "This file is a frozen snapshot of the fully-resolved config (YAML file + src/train.py DEFAULTS merged) at the moment the Gate 1 run was launched. Every other config in the stage-3a sweep must match this exactly except the swept axis (frames/period). Compare future runs' resolved config against this file to confirm settings weren't accidentally drifted."
+}

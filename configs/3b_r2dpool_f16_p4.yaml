@@ -1,0 +1,7 @@
+backbone: r2d_18_pool
+effective_batch: 20
+frames: 16
+period: 4
+physical_batch: 10
+pretrained: true
+resolution: 112

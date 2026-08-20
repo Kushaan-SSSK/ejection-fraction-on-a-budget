@@ -1,0 +1,16 @@
+# Python 3.11 recommended on the training PC (pytorchvideo compatibility).
+# Python 3.13 works for everything except X3D (pytorchvideo); see ENVIRONMENT.md.
+torch>=2.2
+torchvision>=0.17
+fvcore>=0.1.5
+numpy>=1.26
+pandas>=2.0
+scipy>=1.11
+scikit-learn>=1.3
+matplotlib>=3.8
+opencv-python-headless>=4.8
+PyYAML>=6.0
+tqdm>=4.66
+pytest>=8.0
+# X3D backbones only (skip if it fails to install; see models.py fallback note):
+# pytorchvideo==0.1.5

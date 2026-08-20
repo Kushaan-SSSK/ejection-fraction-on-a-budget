@@ -1,0 +1,8 @@
+backbone: x3d_m
+effective_batch: 20
+frames: 16
+native_resolution: 224
+period: 4
+physical_batch: 10
+pretrained: true
+resolution: 112

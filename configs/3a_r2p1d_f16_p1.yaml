@@ -1,0 +1,7 @@
+backbone: r2plus1d_18
+effective_batch: 20
+frames: 16
+period: 1
+physical_batch: 10
+pretrained: true
+resolution: 112

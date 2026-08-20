@@ -1,0 +1,8 @@
+backbone: r2plus1d_18
+effective_batch: 20
+frames: 8
+period: 4
+physical_batch: 20
+pretrained: true
+resolution: 112
+seed: 20260816
