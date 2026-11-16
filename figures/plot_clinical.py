@@ -1,5 +1,5 @@
 """F3: clinical error structure. Panel (a) MAE by EF band (bootstrap CIs);
-panels (b)/(c) Bland-Altman for the reference and the recommended R3D-18
+panels (b)/(c) Bland-Altman for the reference and the candidate R3D-18
 config. Reads only results/.
 """
 
@@ -126,7 +126,7 @@ def main():
     for slot, (name, title) in zip(
             (gs[1], gs[2]),
             (("3a_r2p1d_f32_p2", "(b) Reference: R(2+1)D-18 32f×p2"),
-             ("3b_r3d_f32_p2", "(c) Recommended: R3D-18 32f×p2"))):
+             ("3b_r3d_f32_p2", "(c) Candidate: R3D-18 32f×p2"))):
         y, p = load_pred(name)
         bland_altman(fig.add_subplot(slot), y, p, title)
 

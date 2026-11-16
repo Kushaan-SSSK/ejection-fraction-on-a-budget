@@ -16,6 +16,7 @@ import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 import numpy as np
 import pandas as pd
 
@@ -60,6 +61,9 @@ def _style_axes(ax, xlabel, ylabel):
     ax.set_xlabel(xlabel, color=SECONDARY, fontsize=10)
     ax.set_ylabel(ylabel, color=SECONDARY, fontsize=10)
     ax.set_xscale("log")
+    # matplotlib >= 3.11 labels minor log ticks by default; keep the
+    # major-only labelling of the original (3.10.6) figures
+    ax.xaxis.set_minor_formatter(mticker.NullFormatter())
 
 
 def plot_panel(ax, df, ycol, ylo, yhi, ylabel, xcol="cpu_ms_per_video",
@@ -144,11 +148,11 @@ def make(df, out_dir="figures/out", prior=None, suffix=""):
     for ycol, ylo, yhi, ylabel, fname, extra, maximize, xcol, xlabel in (
             ("mae", "mae_lo", "mae_hi", "Test MAE, EF points",
              f"F1_frontier{suffix}.png", ("hline", 4.1, "published ref 4.1"), False,
-             "cpu_ms_per_video", "CPU latency per video, ms (log, 4 threads)"),
+             "cpu_ms_per_video", "Estimated CPU latency per video, ms (log, 4 threads)"),
             ("sens40", "sens40_lo", "sens40_hi",
              "Sensitivity at EF < 40 (95% CI)",
              f"F2_sensitivity{suffix}.png", None, True,
-             "cpu_ms_per_video", "CPU latency per video, ms (log, 4 threads)"),
+             "cpu_ms_per_video", "Estimated CPU latency per video, ms (log, 4 threads)"),
             ("mae", "mae_lo", "mae_hi", "Test MAE, EF points",
              f"F3_frontier_flops{suffix}.png", ("hline", 4.1, "published ref 4.1"), False,
              "gflops_per_video", "GFLOPs per video (log)")):

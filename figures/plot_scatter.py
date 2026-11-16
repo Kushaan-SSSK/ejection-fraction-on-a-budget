@@ -1,5 +1,5 @@
 """F5: predicted vs reference EF scatter for the reference config and the
-recommended R3D-18 config. Reads only results/.
+candidate R3D-18 config. Reads only results/.
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ INK, SECONDARY, MUTED, GRID = "#0b0b0b", "#52514e", "#898781", "#e1e0d9"
 
 PANELS = [
     ("3a_r2p1d_f32_p2", "(a) Reference: R(2+1)D-18 32f×p2"),
-    ("3b_r3d_f32_p2", "(b) Recommended: R3D-18 32f×p2"),
+    ("3b_r3d_f32_p2", "(b) Candidate: R3D-18 32f×p2"),
 ]
 
 
