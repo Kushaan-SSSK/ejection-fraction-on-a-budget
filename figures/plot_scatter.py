@@ -4,11 +4,21 @@ candidate R3D-18 config. Reads only results/.
 
 from __future__ import annotations
 
+import io
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from PIL import Image
+
+
+def save_tiff(fig, path):
+    """300-dpi LZW TIFF in RGB (PLOS: no alpha channel)."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format="tiff", facecolor="#ffffff", dpi=300)
+    buf.seek(0)
+    Image.open(buf).convert("RGB").save(path, compression="tiff_lzw", dpi=(300, 300))
 
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / "results"
@@ -65,8 +75,7 @@ def main():
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"F5_scatter.{ext}", facecolor="#ffffff")
         print(f"wrote {OUT / f'F5_scatter.{ext}'}")
-    fig.savefig(OUT / "F5_scatter.tif", facecolor="#ffffff", dpi=300,
-                pil_kwargs={"compression": "tiff_lzw"})
+    save_tiff(fig, OUT / "F5_scatter.tif")
     print(f"wrote {OUT / 'F5_scatter.tif'}")
     plt.close(fig)
 

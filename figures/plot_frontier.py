@@ -13,10 +13,12 @@ Encoding (fixed in Phase 0, before any training):
 
 from __future__ import annotations
 
+import io
 import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+from PIL import Image
 import matplotlib.ticker as mticker
 import numpy as np
 import pandas as pd
@@ -49,6 +51,14 @@ def pareto_front(df: pd.DataFrame, xcol: str, ycol: str, maximize: bool = False)
             keep.append(row)
             best = row[ycol]
     return pd.DataFrame(keep)
+
+
+def save_tiff(fig, path):
+    """300-dpi LZW TIFF in RGB (PLOS: no alpha channel)."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format="tiff", facecolor="#ffffff", dpi=300)
+    buf.seek(0)
+    Image.open(buf).convert("RGB").save(path, compression="tiff_lzw", dpi=(300, 300))
 
 
 def _style_axes(ax, xlabel, ylabel):
@@ -175,8 +185,7 @@ def make(df, out_dir="figures/out", prior=None, suffix=""):
         fig.tight_layout(rect=(0, 0, 1, 0.90))
         fig.savefig(out / fname, facecolor="#ffffff")
         fig.savefig((out / fname).with_suffix(".pdf"), facecolor="#ffffff")
-        fig.savefig((out / fname).with_suffix(".tif"), facecolor="#ffffff",
-                    dpi=300, pil_kwargs={"compression": "tiff_lzw"})
+        save_tiff(fig, (out / fname).with_suffix(".tif"))
         plt.close(fig)
         print(f"wrote {out / fname} (+.pdf, +.tif)")
 

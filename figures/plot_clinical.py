@@ -5,12 +5,22 @@ config. Reads only results/.
 
 from __future__ import annotations
 
+import io
 import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from PIL import Image
+
+
+def save_tiff(fig, path):
+    """300-dpi LZW TIFF in RGB (PLOS: no alpha channel)."""
+    buf = io.BytesIO()
+    fig.savefig(buf, format="tiff", facecolor="#ffffff", dpi=300)
+    buf.seek(0)
+    Image.open(buf).convert("RGB").save(path, compression="tiff_lzw", dpi=(300, 300))
 
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / "results"
@@ -133,8 +143,7 @@ def main():
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"F4_clinical.{ext}", facecolor="#ffffff")
         print(f"wrote {OUT / f'F4_clinical.{ext}'}")
-    fig.savefig(OUT / "F4_clinical.tif", facecolor="#ffffff", dpi=300,
-                pil_kwargs={"compression": "tiff_lzw"})
+    save_tiff(fig, OUT / "F4_clinical.tif")
     print(f"wrote {OUT / 'F4_clinical.tif'}")
     plt.close(fig)
 
