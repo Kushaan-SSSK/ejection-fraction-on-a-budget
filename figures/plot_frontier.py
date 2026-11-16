@@ -1,4 +1,5 @@
-"""Cost-accuracy frontier figures (F1/F2/F3), reading results/.
+"""Cost-accuracy frontier figures (F1/F2/F3 and S1 Fig, the frontier
+against GPU latency), reading results/.
 
 Encoding (fixed in Phase 0, before any training):
   x            cost, log scale (primary axis: CPU ms per video, 4 threads)
@@ -86,7 +87,8 @@ def plot_panel(ax, df, ycol, ylo, yhi, ylabel, xcol="cpu_ms_per_video",
                     fmt="none", ecolor=SECONDARY, elinewidth=0.8, capsize=2,
                     zorder=3, alpha=0.7)
         ax.scatter(r[xcol], r[ycol], s=FRAME_SIZE[int(r["frames"])],
-                   marker="*" if is_ref else marker, zorder=4,
+                   marker="*" if is_ref else marker,
+                   zorder=5 if is_ref else 4,  # reference star always on top
                    facecolor=INK if is_ref else FAMILY_COLORS[fam],
                    edgecolor="#ffffff", linewidth=1.2)
     # model identity is carried by the legend only; no in-plot name labels
@@ -133,6 +135,7 @@ def load_results(costs_csv="results/costs.csv", metrics_dir="results/metrics"):
         rows.append({"config": c["config"], "backbone": c["backbone"],
                      "frames": c["frames"], "period": c["period"],
                      "cpu_ms_per_video": c["cpu_ms_per_video"],
+                     "gpu_ms_per_video": c["gpu_ms_per_video"],
                      "gflops_per_video": c["gflops_per_video"],
                      "mae": m["mae"], "mae_lo": m["mae_ci_lo"],
                      "mae_hi": m["mae_ci_hi"],
@@ -155,7 +158,10 @@ def make(df, out_dir="figures/out", prior=None, suffix=""):
              "cpu_ms_per_video", "Estimated CPU latency per video, ms (log, 4 threads)"),
             ("mae", "mae_lo", "mae_hi", "Test MAE, EF points",
              f"F3_frontier_flops{suffix}.png", ("hline", 4.1, "published ref 4.1"), False,
-             "gflops_per_video", "GFLOPs per video (log)")):
+             "gflops_per_video", "GFLOPs per video (log)"),
+            ("mae", "mae_lo", "mae_hi", "Test MAE, EF points",
+             f"S1_frontier_gpu{suffix}.png", ("hline", 4.1, "published ref 4.1"), False,
+             "gpu_ms_per_video", "Estimated GPU latency per video, ms (log, batch 1, fp32)")):
         fig, ax = plt.subplots(figsize=(7.2, 4.6), dpi=200)
         fig.patch.set_facecolor("#ffffff")
         plot_panel(ax, df, ycol, ylo, yhi, ylabel, prior=prior, maximize=maximize,
